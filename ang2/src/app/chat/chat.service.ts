@@ -13,22 +13,19 @@ export class ChatService {
   private socket;
   user:User;
   loggedUser: any;
-  USERS: User[] = []
+  // USERS: User[] = []
   loggedin = false
   message:any;
-  condition: boolean = true
   // MESSAGES: Message[] = []
 
   constructor(private http:Http) {}
   
-  getUser(){
-    this.socket.emit('logged-user',this.loggedUser.Name)
-  }
-  
+  //Emits the message sent from the form
   sendMessage(message:any){
       this.socket.emit('add-message',message)
   }
-    
+  
+  //gets the last message that belongs to the the current user from the database
   getMessages(){
     console.log("entering get messages")
     let observable = new Observable(observer => {
@@ -44,23 +41,26 @@ export class ChatService {
     return observable;
   }
   
-  get_users(){
-    this.http.get('/users')
-      .map((response: Response) => response.json())
-      .subscribe(
-      data => {this.USERS=data},
-      (e) => {console.log(e)},
-      () => {console.log("Continue?")}
-      )
-  }
 
-  loggedIn(){
-    this.http.get('/loggedin')
-      .map((response: Response) => response.json())
-      .subscribe(user=>{if(user){{this.loggedin = true; this.loggedUser=user}}else{this.loggedin = false}},
-      )
-    }
+  // get_users(){
+  //   this.http.get('/users')
+  //     .map((response: Response) => response.json())
+  //     .subscribe(
+  //     data => {this.USERS=data},
+  //     (e) => {console.log(e)},
+  //     () => {console.log("Continue?")}
+  //     )
+  // }
+  
+  
+  // loggedIn(){
+  //   this.http.get('/loggedin')
+  //     .map((response: Response) => response.json())
+  //     .subscribe(user=>{if(user){{this.loggedin = true; this.loggedUser=user}}else{this.loggedin = false}},
+  //     )
+  //   }
 
+    //creates new user
     create(user:User){
       const headers = new Headers({"Content-Type": "application/json"})
       const options = new RequestOptions({headers: headers})
@@ -72,6 +72,7 @@ export class ChatService {
         })
     }
 
+    //checks to see if the user exists in db
     find(user:User){
       console.log("inside service")
       const headers = new Headers({"Content-Type": "application/json"})
@@ -90,6 +91,7 @@ export class ChatService {
           }
         })
     }
+
 
     logOut(){
       console.log("hitting logout service")
