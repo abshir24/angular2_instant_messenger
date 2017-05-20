@@ -22,6 +22,8 @@ export class ChatService {
   
   //Emits the message sent from the form
   sendMessage(message:any){
+      //the problem is here!
+      //if i put anything besides the emit function inside of this method then the socket will automatically disconnect.
       this.socket.emit('add-message',message)
   }
   

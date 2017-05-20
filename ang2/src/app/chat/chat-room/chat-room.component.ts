@@ -21,7 +21,6 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 
 
   sendMessageComp(){
-    //the problem is here!
     // this.newMessage.Sender = this._chatService.loggedUser.Name
     // console.log("sender", this.newMessage.Sender)
     this._chatService.sendMessage(this.newMessage);
