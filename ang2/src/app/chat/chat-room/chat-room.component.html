@@ -1,0 +1,22 @@
+
+<form (submit)="sendMessageComp()" #formData="ngForm">
+  <label>Recipient</label>
+  <input type="text" name="Recipient" [(ngModel)]="newMessage.Recipient" #Recipient= "ngModel"><br>
+  
+  <label for="">Message</label>
+  <textarea name="Message" cols="30" rows="2" [(ngModel)]="newMessage.Message" #Message= "ngModel"></textarea><br>
+  
+  <input type="submit" value = "Send!">
+</form>
+
+<div *ngFor="let message of messages">
+    From: {{message.text.Sender}}
+    Message: {{message.text.Message}}
+</div>
+
+<!--<div *ngFor="let message of _chatService.MESSAGES">
+  From: {{message.Sender}}
+  Message:{{message.Message}}
+</div>-->
+
+

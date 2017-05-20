@@ -1,0 +1,5 @@
+<form (submit)="find()" #formData="ngForm">
+  <label>Name</label>
+  <input type="text" name="Name" [(ngModel)]="newUser.Name" #Name= "ngModel">
+  <input type="submit" value = "Enter!">
+</form>

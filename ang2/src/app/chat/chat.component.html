@@ -1,0 +1,7 @@
+<div *ngIf="!this._chatService.loggedin">
+  <app-user-create></app-user-create>
+</div>
+
+<div *ngIf ="this._chatService.loggedin">
+  <app-chat-room></app-chat-room>
+</div>
