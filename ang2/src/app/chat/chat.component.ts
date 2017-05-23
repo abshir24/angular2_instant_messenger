@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, OnInit,OnDestroy } from '@angular/core';
 import { ChatService } from "app/chat/chat.service";
 
 @Component({
@@ -8,4 +8,8 @@ import { ChatService } from "app/chat/chat.service";
 })
 export class ChatComponent{
   constructor(private _chatService:ChatService) {}
+
+  ngOnInit() {
+     
+  }
 }

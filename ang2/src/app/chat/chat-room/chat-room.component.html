@@ -14,6 +14,8 @@
     Message: {{message.text.Message}}
 </div>
 
+<button (click)="_chatService.logOut()">Logout</button><br>
+
 <!--<div *ngFor="let message of _chatService.MESSAGES">
   From: {{message.Sender}}
   Message:{{message.Message}}

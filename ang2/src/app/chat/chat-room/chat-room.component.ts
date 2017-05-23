@@ -29,9 +29,9 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.connection = this._chatService.getMessages().subscribe(message => {
-      console.log("message", message)
       this.messages.push(message);
     })
+    this._chatService.currentUser()
   }
   
   ngOnDestroy() {

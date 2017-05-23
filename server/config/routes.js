@@ -7,4 +7,5 @@ module.exports = function(app){
     app.post("/create",controller.create)
     app.post('/find',controller.find)
     app.get('/logout', controller.logout)
+    app.get('/loggedin', controller.loggedin)
 }

@@ -19,6 +19,13 @@ export class ChatService {
   // MESSAGES: Message[] = []
 
   constructor(private http:Http) {}
+
+  currentUser(){
+    this.http.get('/loggedin')
+      .map((response: Response) => response.json())
+      .subscribe(user=>{if(user){{this.loggedin = true; this.loggedUser=user; this.socket = io(this.url); this.socket.emit('current-user', this.loggedUser) }}else{this.loggedin = false}})
+    
+  }
   
   //Emits the message sent from the form
   sendMessage(message:any){
@@ -39,7 +46,6 @@ export class ChatService {
         this.socket.disconnect();
       };  
     })
-    console.log("message", observable)     
     return observable;
   }
   
@@ -54,13 +60,6 @@ export class ChatService {
   //     )
   // }
   
-  
-  // loggedIn(){
-  //   this.http.get('/loggedin')
-  //     .map((response: Response) => response.json())
-  //     .subscribe(user=>{if(user){{this.loggedin = true; this.loggedUser=user}}else{this.loggedin = false}},
-  //     )
-  //   }
 
     //creates new user
     create(user:User){
@@ -68,15 +67,11 @@ export class ChatService {
       const options = new RequestOptions({headers: headers})
       this.http.post("/create", user,options)
         .map((response: Response)=> response.json())
-        .subscribe(userinfo =>{console.log("Server returned this userinfo.body: ",userinfo);
-          this.loggedUser = userinfo;
-          this.loggedin = true
-        })
+        .subscribe(userinfo =>{this.loggedUser = userinfo; this.loggedin = true})
     }
 
     //checks to see if the user exists in db
     find(user:User){
-      console.log("inside service")
       const headers = new Headers({"Content-Type": "application/json"})
       const options = new RequestOptions({headers: headers})
       this.http.post("/find", user,options)
@@ -93,7 +88,6 @@ export class ChatService {
           }
         })
     }
-
 
     logOut(){
       console.log("hitting logout service")

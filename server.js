@@ -22,9 +22,15 @@ controller = require("./server/controllers/controller.js")
   let io = require("socket.io")(server)
   var User = mongoose.model("User")
   var Message = mongoose.model("Message")
+  var current_user;
 
   io.on('connection', (socket) => {
     console.log('user connected');
+
+    socket.on("current-user", (user)=>{
+      console.log("current-user socket", user)
+      current_user = user;
+    })
 
     socket.on('add-message', (message)=>{
       console.log("addmessage socket", message)
@@ -34,19 +40,19 @@ controller = require("./server/controllers/controller.js")
         console.log("add_message controller")
         console.log("**********************************")
         console.log("message info:", message)
-        console.log("message recipient", typeof(message.Message))
         var newMessage = new Message()
         newMessage.Recipient = message.Recipient
         newMessage.Message = message.Message
         //place holder for message.sender because i can't access the current users info
-        newMessage.Sender = "abshir"
+        console.log("current user", current_user.Name)
+        newMessage.Sender = current_user.Name
         newMessage.save().then(getusermessages)
     },
       
     getusermessages = function(){ 
         //finding the messages of the person that logged in and retrieving the last message that belongs to them
         //i'm using jack as a placeholder to for the current user
-        Message.find({Recipient: "jack"},function(err,data){
+        Message.find({Recipient:current_user.Name},function(err,data){
             console.log("last-message",data[data.length-1])
             io.emit('message',{type:'new-message',text:data[data.length-1]});
         }) 
